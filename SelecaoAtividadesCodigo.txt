@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+public class Programa { 
+    public class Horario { 
+        
+        public int Inicio { get; set; }
+        public int Termino { get; set; }
+
+        public Horario(int inicio, int termino) {
+            Inicio = inicio;
+            Termino = termino;
+        }
+    }
+    
+    public static void Main(String[] args) {
+        List<Horario> atividades = new List<Horario> {
+            new Horario(1,4),
+            new Horario(3,5),
+            new Horario(0,6),
+            new Horario(5,7),
+            new Horario(3,9),
+            new Horario(5,9),
+            new Horario(6,10),
+            new Horario(8,11),
+            new Horario(8,12),
+            new Horario(2,14),
+            new Horario(12,16)
+        };
+        var atividadesOrdenadas = atividades.OrderBy(a => a.Termino).ToList();
+
+        List<Horario> agendadas = new List<Horario>();
+
+        int ultimaAtividadeTermino = -1;
+
+        foreach(var ativ in atividadesOrdenadas) { 
+            if(ativ.Inicio >= ultimaAtividadeTermino) {
+                agendadas.Add(ativ);
+
+                ultimaAtividadeTermino = ativ.Termino;
+            }
+        }
+
+        Console.WriteLine("Atividades Agendadas");
+
+        foreach(var ativ in agendadas) {
+            Console.WriteLine($"Início: {ativ.Inicio}, Término: {ativ.Termino}");
+        }
+    }
+
+}
